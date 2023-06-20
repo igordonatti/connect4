@@ -19,11 +19,13 @@ module.exports = {
       },
       width: {
         281: "1124px",
-        'boardWidth': '768px' 
+        'boardWidth': '768px',
+        'cell': '72px'
       },
       height: {
         218: "872px",
-        'boardHeight': '632px'
+        'boardHeight': '632px',
+        'cell': '72px'
       }
     },
   },
