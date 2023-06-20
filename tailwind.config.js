@@ -26,7 +26,7 @@ module.exports = {
         218: "872px",
         'boardHeight': '632px',
         'cell': '72px'
-      }
+      },
     },
   },
   plugins: [],

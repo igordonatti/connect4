@@ -3,13 +3,12 @@ import { useState } from "react";
 export default function BoardGame(){
   const [currentPlayer, setCurrentPlayer] = useState(true);
   const [board, setBoard] = useState([
-    [['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', '']],
-    [['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', '']],
-    [['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', '']],
-    [['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', '']],
-    [['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', '']],
-    [['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', '']],
-    [['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', '']],
+    [['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', '']],
+    [['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', '']],
+    [['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', '']],
+    [['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', '']],
+    [['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', '']],
+    [['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', ''], ['', '']],
   ])
   
   const handleCellClick = (rowIndex: number, colIndex: number) => {
@@ -23,13 +22,13 @@ export default function BoardGame(){
 
   return (
     <div className="bg-grays-300 rounded mb-6 grid grid-cols-7 items-center">
+  {board[0].map((_, colIndex) => (
+    <div key={colIndex} className="grid grid-rows-7">
       {board.map((row, rowIndex) => (
-        <div key={rowIndex}>
-          {row.map((cell, colIndex) => (
-            <div key={colIndex} className={`m-4 w-cell h-cell rounded-full cursor-pointer ${board[rowIndex][colIndex][0] === '' ? 'bg-grays-100' : board[rowIndex][colIndex][0]}`} onClick={() => handleCellClick(rowIndex, colIndex)}></div>
-          ))}
-        </div>
+        <div key={rowIndex} className={`m-4 w-cell h-cell rounded-full cursor-pointer ${board[rowIndex][colIndex][0] === '' ? 'bg-grays-100' : board[rowIndex][colIndex][0]}`} onClick={() => handleCellClick(rowIndex, colIndex)}></div>
       ))}
     </div>
+  ))}
+</div>
   )
 }
