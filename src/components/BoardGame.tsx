@@ -13,7 +13,7 @@ export default function BoardGame(){
   ])
   
   const handleCellClick = (_: number, colIndex: number) => {
-    MakeMove(board, setBoard, colIndex, currentPlayer, setCurrentPlayer);
+    MakeMove(board, setBoard, colIndex, currentPlayer, setCurrentPlayer, true);
   }
 
   return (
