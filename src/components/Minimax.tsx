@@ -7,9 +7,11 @@ type MinimaxProps = {
   board: string[][];
   depth: number;
   maximizingPlayer: boolean;
+  alpha: number;
+  beta: number;
 }
 
-export const Minimax = ({board, depth, maximizingPlayer}: MinimaxProps) => {
+export const Minimax = ({board, depth, maximizingPlayer, alpha, beta}: MinimaxProps) => {
   const validLocations = GetValidLocations(board);
   const isTerminal = IsTerminalNode(board);
 
@@ -32,17 +34,20 @@ export const Minimax = ({board, depth, maximizingPlayer}: MinimaxProps) => {
       if (row){
         boardCopy[row][col] = 'bg-red-800';
       }
-      const newScore = Minimax({board: boardCopy, depth: depth-1, maximizingPlayer: false})[1];
-      if(newScore){
-        if(newScore > value){
-          value = newScore;
-          column = col;
+      const newScore = Minimax({board: boardCopy, depth: depth-1, maximizingPlayer: false, alpha, beta});
+      if(newScore[1]){
+        if(newScore[1] < value){
+          value = newScore[1];
+        }
+        if(newScore[0]){
+          column = newScore[0];
         }
       }
+
+      alpha = alpha > value ? alpha : value;
+      if (alpha >= beta) break;
     }
 
-    console.log([column, value]);
-    console.log(depth);
     return [column, value];
   }
 
@@ -57,17 +62,20 @@ export const Minimax = ({board, depth, maximizingPlayer}: MinimaxProps) => {
       if (row){
         boardCopy[row][col] = 'bg-red-800';
       }
-      const newScore = Minimax({board: boardCopy, depth: depth-1, maximizingPlayer: true})[1];
-      if(newScore){
-        if(newScore < value){
-          value = newScore;
-          column = col;
+      const newScore = Minimax({board: boardCopy, depth: depth-1, maximizingPlayer: false, alpha, beta});
+      if(newScore[1]){
+        if(newScore[1] < value){
+          value = newScore[1];
+        }
+        if(newScore[0]){
+          column = newScore[0];
         }
       }
-    }
 
-    console.log([column, value]);
-    console.log(depth);
+      beta = beta < value ? beta : value;
+      if (alpha >= beta) break;
+    }
+  
     return [column, value];
   }
 }
@@ -99,6 +107,7 @@ const scorePosition = (board: string[][]) => {
   // Score center column
   const centerArray = board.map(row => row[COLUMN_COUNT / 2]);
   const centerCount = centerArray.filter(item => item === 'bg-red-800').length;
+
   score += centerCount * 3;
 
   // Score Horizontal
@@ -169,13 +178,16 @@ const EvalueteWindow = (window: Array<string>, piece: string) => {
     (window.filter(item => item === '').length == 1)
   ) score -= 4;
 
+  console.log(score != 0 ? score : null);
   return score;
 }
 
 const getNextOpenRow = (board: string [][], col: number) => {
-  for(let i = 5; i >= -1; i--){
+  for(let i = 5; i >= 0; i--){
     if(board[i][col] == ''){
       return i;
     }
   }
+
+  return null;
 }
